@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header, Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const Welcome = () => {
+
   return (
     <Grid container centered columns={1}>
       <Header size="huge">Welcome to CoffePot</Header>
