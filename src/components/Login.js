@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Header, Container } from 'semantic-ui-react';
+import axios from 'axios';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:5000/login', {
+      email,
+      password,
+    });
+    console.log(email, password);
+  };
+
   return (
     <Container>
       <Header>Login to CoffeePot</Header>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Field>
-          <label>First Name</label>
-          <input placeholder="First Name" />
+          <label>Email</label>
+          <input
+            placeholder="Enter email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Form.Field>
         <Form.Field>
-          <label>Last Name</label>
-          <input placeholder="Last Name" />
+          <label>Password</label>
+          <input
+            placeholder="Enter Password"
+            type="text"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </Form.Field>
         <Button type="submit">Submit</Button>
       </Form>

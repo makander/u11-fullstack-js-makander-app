@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import { Button, Form, Header, Container } from 'semantic-ui-react';
 
@@ -10,6 +11,12 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios.post('http://localhost:5000/register', {
+      firstName,
+      lastName,
+      email,
+      password,
+    });
   };
 
   return (
@@ -21,6 +28,8 @@ const Register = () => {
         <Form.Field>
           <label>First Name</label>
           <input
+            type="text"
+            value={firstName}
             placeholder="First Name"
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -28,6 +37,8 @@ const Register = () => {
         <Form.Field>
           <label>Last Name</label>
           <input
+            type="text"
+            value={lastName}
             placeholder="Last Name"
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -35,6 +46,8 @@ const Register = () => {
         <Form.Field>
           <label>Email</label>
           <input
+            type="text"
+            value={email}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -42,6 +55,8 @@ const Register = () => {
         <Form.Field>
           <label>Password</label>
           <input
+            type="text"
+            value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
