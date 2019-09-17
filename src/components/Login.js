@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Header, Container } from 'semantic-ui-react';
 import axios from 'axios';
+import storeToken from './utils/authHelper';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,10 +9,14 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/login', {
-      email,
-      password,
-    });
+    axios
+      .post('http://localhost:5000/login', {
+        email,
+        password,
+      })
+      .then((res) => {
+        storeToken(res.data);
+      });
     console.log(email, password);
   };
 
