@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Form, Header, Container } from 'semantic-ui-react';
 import axios from 'axios';
-import storeToken from './utils/authHelper';
+import storeToken from '../utils/authHelper';
+import { UserContext } from '../context/UserContext';
 
 const Login = () => {
+  const { dispatch } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,8 +18,13 @@ const Login = () => {
       })
       .then((res) => {
         storeToken(res.data);
-      });
-    console.log(email, password);
+      })
+      .then(() =>
+        dispatch({
+          type: 'LOGIN',
+          userLoggedIn: true,
+        })
+      );
   };
 
   return (

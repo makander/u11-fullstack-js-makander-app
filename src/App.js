@@ -7,16 +7,23 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
 import Welcome from './components/Welcome';
+import Dashboard from './components/Dashboard';
+import UserContextProvider from './context/UserContext';
 
 const App = () => {
   return (
     <Router>
-      <Header className="header">
-        <Navbar />
-      </Header>
-      <Route path="/" exact component={Welcome}></Route>
-      <Route path="/login" exact component={Login}></Route>
-      <Route path="/register" exact component={Register}></Route>
+      <UserContextProvider>
+        <Header className="header">
+          <Navbar />
+        </Header>
+
+        <Route path="/" exact component={Welcome}></Route>
+        <Route path="/login" exact component={Login}></Route>
+
+        <Route path="/register" exact component={Register}></Route>
+        <Route path="/dashboard" exact component={Dashboard}></Route>
+      </UserContextProvider>
     </Router>
   );
 };
