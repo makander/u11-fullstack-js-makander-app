@@ -4,7 +4,8 @@ import axios from 'axios';
 import storeToken from '../utils/authHelper';
 import { UserContext } from '../context/UserContext';
 
-const Login = () => {
+const Login = (props) => {
+  const { history } = props;
   const { dispatch } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +26,8 @@ const Login = () => {
           userLoggedIn: true,
         })
       );
+    history.push('/dashboard');
+    console.log(props);
   };
 
   return (

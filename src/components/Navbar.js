@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-
+import { withRouter } from 'react-router';
 import { UserContext } from '../context/UserContext';
 
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const { history } = props;
   const { dispatch } = useContext(UserContext);
 
   const handleLogout = (e) => {
@@ -14,6 +15,7 @@ const Navbar = () => {
       type: 'LOGOUT',
       userLoggedIn: false,
     });
+    history.push('/');
   };
 
   return (
@@ -23,12 +25,12 @@ const Navbar = () => {
       </Menu.Item>
 
       <Menu.Item position="right" name="Logout">
-        <Link to={'/'} onClick={handleLogout}>
+        <button className="link-button" type="button" onClick={handleLogout}>
           Logout
-        </Link>
+        </button>
       </Menu.Item>
     </Menu>
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);
