@@ -7,7 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Welcome from './components/Welcome';
 import Dashboard from './components/Dashboard';
-import UserContextProvider from './context/UserContext';
+import UserContextProvider from './context/AuthContext';
 
 const App = () => {
   return (

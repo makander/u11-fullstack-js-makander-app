@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Button, Form, Header, Container } from 'semantic-ui-react';
 import axios from 'axios';
 import storeToken from '../utils/authHelper';
-import { UserContext } from '../context/UserContext';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = (props) => {
   const { history } = props;
-  const { dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,15 +19,11 @@ const Login = (props) => {
       })
       .then((res) => {
         storeToken(res.data);
-      })
-      .then(() =>
         dispatch({
           type: 'LOGIN',
-          userLoggedIn: true,
-        })
-      );
+        });
+      });
     history.push('/dashboard');
-    console.log(props);
   };
 
   return (
@@ -47,7 +43,7 @@ const Login = (props) => {
           <label>Password</label>
           <input
             placeholder="Enter Password"
-            type="text"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
