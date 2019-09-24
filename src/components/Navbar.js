@@ -24,7 +24,7 @@ const Navbar = (props) => {
       {authStatus.isLoggedIn ? (
         <Menu>
           <Menu.Item>
-            <Link to={'/Dashboard'}>Dashboard</Link>
+            <Link to={'/dashboard'}>Dashboard</Link>
           </Menu.Item>
           <Menu.Item position="right" name="Logout">
             <button

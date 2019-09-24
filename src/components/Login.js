@@ -22,8 +22,9 @@ const Login = (props) => {
         dispatch({
           type: 'LOGIN',
         });
-      });
-    history.push('/dashboard');
+        history.push('/dashboard');
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
