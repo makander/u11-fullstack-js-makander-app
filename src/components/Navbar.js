@@ -38,7 +38,10 @@ const Navbar = (props) => {
       ) : (
         <Menu>
           <Menu.Item>
-            <Link to={'/'}>CoffePot</Link>
+            <Link to={'/'}>CoffeePot</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to={'/login'}>Login</Link>
           </Menu.Item>
         </Menu>
       )}

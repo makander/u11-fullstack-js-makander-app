@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Form, Header, Container } from 'semantic-ui-react';
 import axios from 'axios';
-import storeToken from '../utils/authHelper';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = (props) => {
@@ -18,7 +18,6 @@ const Login = (props) => {
         password,
       })
       .then((res) => {
-        storeToken(res.data);
         dispatch({
           type: 'LOGIN',
         });
@@ -51,6 +50,13 @@ const Login = (props) => {
         </Form.Field>
         <Button type="submit">Submit</Button>
       </Form>
+
+      <div>
+        <h4>Don't have an account?</h4>
+        <p>
+          Sign up <Link to={'/register'}>here</Link>
+        </p>
+      </div>
     </Container>
   );
 };
