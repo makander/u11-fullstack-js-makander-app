@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'airbnb-base',
+  extends: 'airbnb/hooks',
   rules: {
     'linebreak-style': 0,
   },
