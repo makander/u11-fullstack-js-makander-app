@@ -6,7 +6,9 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
 import Welcome from './components/Welcome';
-import Dashboard from './components/Dashboard';
+import Settings from './components/Settings';
+import EditCoffeePot from './components/CoffeePots/EditCoffeepot';
+import Dashboard from './components/Settings';
 import UserContextProvider from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -20,11 +22,14 @@ const App = () => {
         <Route path="/" exact component={Welcome}></Route>
         <Route path="/login" exact component={Login}></Route>
         <Route path="/register" exact component={Register}></Route>
-        <Route path="/dashboardtest" exact component={Dashboard}></Route>
-        <ProtectedRoute
-          path="/dashboard"
+        <Route
+          path="/coffeepot/edit/:id"
           exact
-          component={Dashboard}></ProtectedRoute>
+          component={EditCoffeePot}></Route>
+        <ProtectedRoute
+          path="/settings"
+          exact
+          component={Settings}></ProtectedRoute>
       </BrowserRouter>
     </UserContextProvider>
   );

@@ -13,7 +13,7 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:5000/login', {
+      .post('http://localhost:5000/api/users/login', {
         email,
         password,
       })
@@ -21,7 +21,7 @@ const Login = (props) => {
         dispatch({
           type: 'LOGIN',
         });
-        history.push('/dashboard');
+        history.push('/');
       })
       .catch((err) => console.log(err));
   };
