@@ -6,11 +6,16 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
 import Welcome from './components/Welcome';
-import Settings from './components/Settings';
 import EditCoffeePot from './components/CoffeePots/EditCoffeepot';
-import Dashboard from './components/Settings';
+
 import UserContextProvider from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import DeleteUsers from './components/Users/DeleteUsers';
+import EditUsers from './components/Users/EditUsers';
+import ListUsers from './components/Users/ListUsers';
+import Profile from './components/Profile';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const App = () => {
   return (
@@ -27,9 +32,13 @@ const App = () => {
           exact
           component={EditCoffeePot}></Route>
         <ProtectedRoute
-          path="/settings"
+          path="/profile"
           exact
-          component={Settings}></ProtectedRoute>
+          component={Profile}></ProtectedRoute>
+        <ProtectedRoute
+          path="/users"
+          exact
+          component={ListUsers}></ProtectedRoute>
       </BrowserRouter>
     </UserContextProvider>
   );

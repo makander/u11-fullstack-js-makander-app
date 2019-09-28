@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 
 const EditCoffeePot = (props) => {
+  const { history } = props;
   const [coffeePot, setCoffeePot] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -21,7 +22,6 @@ const EditCoffeePot = (props) => {
     axios
       .get(`http://localhost:5000/api/coffeepots/${props.match.params.id}`)
       .then((data) => {
-        console.log(data.data.result);
         setCoffeePot([data.data.result]);
       })
       .catch((err) => console.log(err));
@@ -29,14 +29,16 @@ const EditCoffeePot = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(
-      `http://localhost:5000/api/coffeepots/edit/${props.match.params.id}`,
-      {
-        name,
-        description,
-        ip,
-      }
-    );
+    axios
+      .put(
+        `http://localhost:5000/api/coffeepots/edit/${props.match.params.id}`,
+        {
+          name,
+          description,
+          ip,
+        }
+      )
+      .then(() => history.push('/'));
   };
 
   return (

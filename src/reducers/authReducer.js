@@ -1,4 +1,5 @@
 export const authReducer = (state, action) => {
+  console.log(state, action);
   switch (action.type) {
     case 'LOGIN':
       return {
@@ -9,6 +10,11 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         isLoggedIn: false,
+      };
+    case 'IS_ADMIN':
+      return {
+        ...state,
+        admin: true,
       };
     default:
       return state;

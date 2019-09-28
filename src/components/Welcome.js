@@ -7,13 +7,17 @@ import {
   Label,
   ItemHeader,
   Button,
+  Dimmer,
+  Loader,
+  Image,
+  Segment,
 } from 'semantic-ui-react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import uuid from 'uuid';
-import { handleRef } from '@stardust-ui/react-component-ref';
 
-const Welcome = () => {
+const Welcome = (props) => {
+  const { history } = props;
   const { authStatus } = useContext(AuthContext);
   const [coffeePots, setCoffeePots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +31,8 @@ const Welcome = () => {
       })
       .catch((err) => console.log(err));
   }, [setLoading]);
+
+  useEffect(() => {});
 
   const handleDelete = (id) => {
     console.log('delete');
@@ -42,43 +48,51 @@ const Welcome = () => {
       </Grid.Row>
 
       {!loading ? (
-        <div>Loading</div>
+        <Loader active inline="centered" size="large" />
       ) : (
-        <Item.Group divided>
-          {console.log(coffeePots)}
-          {coffeePots.map((item) => (
-            <Item key={uuid()}>
-              <Item.Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
+        <Segment stacked>
+          <Item.Group divided>
+            {console.log(coffeePots)}
+            {coffeePots.map((item) => (
+              <Item key={uuid()}>
+                <Item.Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
 
-              <Item.Content>
-                <ItemHeader key={uuid()}>{item.name}</ItemHeader>
-                <br />
-                {item.status.map((item) => (
-                  <Item.Description key={uuid()}>
-                    {item.weight}
-                    {item.time}
-                  </Item.Description>
-                ))}
-                <Item.Meta key={uuid()}>{item.description}</Item.Meta>
-                {authStatus.isLoggedIn ? (
-                  <Item.Extra key={uuid()}>
-                    <Link
-                      className="ui focused button tiny primary"
-                      to={`/coffeepot/edit/${item._id}`}>
-                      Edit
-                    </Link>
+                <Item.Content>
+                  <Item.Header
+                    as="h5"
+                    color="teal"
+                    textalign="center"
+                    key={uuid()}>
+                    {item.name}
+                  </Item.Header>
 
-                    <Button
-                      className="ui focused orange tiny primary"
-                      onClick={() => handleDelete(`${item._id}`)}>
-                      Delete buton
-                    </Button>
-                  </Item.Extra>
-                ) : null}
-              </Item.Content>
-            </Item>
-          ))}
-        </Item.Group>
+                  {item.status.map((item) => (
+                    <Item.Description key={uuid()}>
+                      {item.weight}
+                      {item.time}
+                    </Item.Description>
+                  ))}
+                  <Item.Meta key={uuid()}>{item.description}</Item.Meta>
+                  {authStatus.isLoggedIn ? (
+                    <Item.Extra key={uuid()}>
+                      <Link
+                        className="ui focused button tiny primary"
+                        to={`/coffeepot/edit/${item._id}`}>
+                        Edit
+                      </Link>
+
+                      <Button
+                        className="ui focused tiny orange"
+                        onClick={() => handleDelete(`${item._id}`)}>
+                        Delete buton
+                      </Button>
+                    </Item.Extra>
+                  ) : null}
+                </Item.Content>
+              </Item>
+            ))}
+          </Item.Group>
+        </Segment>
       )}
     </Grid>
   );

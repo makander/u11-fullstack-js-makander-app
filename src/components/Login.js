@@ -1,6 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form, Header, Container } from 'semantic-ui-react';
+import {
+  Button,
+  Form,
+  Header,
+  Segment,
+  Image,
+  Grid,
+  Message,
+} from 'semantic-ui-react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 
@@ -13,51 +21,65 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:5000/api/users/login', {
-        email,
-        password,
-      })
+      .post(
+        'http://localhost:5000/api/users/login',
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         dispatch({
           type: 'LOGIN',
         });
+        if (res.data.isAdmin) {
+          dispatch({
+            type: 'IS_ADMIN',
+          });
+        }
         history.push('/');
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <Container>
-      <Header>Login to CoffeePot</Header>
-      <Form onSubmit={handleSubmit}>
-        <Form.Field>
-          <label>Email</label>
-          <input
-            placeholder="Enter email"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Password</label>
-          <input
-            placeholder="Enter Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Field>
-        <Button type="submit">Submit</Button>
-      </Form>
+    <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h2" color="teal" textAlign="center">
+          <Image src="/logo.png" /> Log-in to your account
+        </Header>
+        <Form size="large" onSubmit={handleSubmit}>
+          <Segment stacked>
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="E-mail address"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Form.Input
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-      <div>
-        <h4>Don't have an account?</h4>
-        <p>
-          Sign up <Link to={'/register'}>here</Link>
-        </p>
-      </div>
-    </Container>
+            <Button type="submit">Submit</Button>
+          </Segment>
+          <div>
+            <Message>
+              Don't have an account? Sign up <Link to={'/register'}>here</Link>
+            </Message>
+          </div>
+        </Form>
+      </Grid.Column>
+    </Grid>
   );
 };
 
