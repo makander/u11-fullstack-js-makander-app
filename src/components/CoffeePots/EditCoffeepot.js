@@ -8,6 +8,7 @@ import {
   Grid,
 } from 'semantic-ui-react';
 import axios from 'axios';
+import uuid from 'uuid';
 
 const EditCoffeePot = (props) => {
   const { history } = props;
@@ -51,7 +52,7 @@ const EditCoffeePot = (props) => {
             Update to CoffeePot
           </Header>
           {coffeePot.map((item) => (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} key={uuid()}>
               <Form.Field>
                 <label>Name</label>
                 <input
@@ -61,7 +62,7 @@ const EditCoffeePot = (props) => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </Form.Field>
-              <Form.Field>
+              <Form.Field key={uuid()}>
                 <label>Description</label>
                 <TextArea
                   rows={3}
@@ -71,7 +72,7 @@ const EditCoffeePot = (props) => {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </Form.Field>
-              <Form.Field>
+              <Form.Field key={uuid()}>
                 <label>IP-Adress</label>
                 <input
                   type="text"

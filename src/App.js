@@ -3,17 +3,16 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import { Header } from 'semantic-ui-react';
 import Navbar from './components/Navbar';
-import Login from './components/Login';
-import Register from './components/Register';
+import Login from './components/Users/Login';
+import Register from './components/Users/Register';
 import Welcome from './components/Welcome';
 import EditCoffeePot from './components/CoffeePots/EditCoffeepot';
 
 import UserContextProvider from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import DeleteUsers from './components/Users/DeleteUsers';
-import EditUsers from './components/Users/EditUsers';
+import EditUser from './components/Users/EditUser';
 import ListUsers from './components/Users/ListUsers';
-import Profile from './components/Profile';
+import Profile from './components/Users/Profile';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -31,6 +30,10 @@ const App = () => {
           path="/coffeepot/edit/:id"
           exact
           component={EditCoffeePot}></Route>
+        <ProtectedRoute
+          path="/users/edit/:id"
+          exact
+          component={EditUser}></ProtectedRoute>
         <ProtectedRoute
           path="/profile"
           exact

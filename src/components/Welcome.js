@@ -1,23 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Header,
-  Grid,
-  Item,
-  Label,
-  ItemHeader,
-  Button,
-  Dimmer,
-  Loader,
-  Image,
-  Segment,
-} from 'semantic-ui-react';
+import { Header, Grid, Item, Button, Loader, Segment } from 'semantic-ui-react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import uuid from 'uuid';
 
 const Welcome = (props) => {
-  const { history } = props;
   const { authStatus } = useContext(AuthContext);
   const [coffeePots, setCoffeePots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +15,6 @@ const Welcome = (props) => {
       .get('http://localhost:5000/api/coffeepots/')
       .then((data) => {
         setCoffeePots(data.data.result);
-        console.log(data.data.result[0]);
       })
       .catch((err) => console.log(err));
   }, [setLoading]);
@@ -42,7 +29,6 @@ const Welcome = (props) => {
 
   return (
     <Grid container centered columns={1}>
-      {console.log(authStatus)}
       <Grid.Row>
         <Header size="huge">Welcome to CoffePot</Header>
       </Grid.Row>
@@ -52,7 +38,6 @@ const Welcome = (props) => {
       ) : (
         <Segment stacked>
           <Item.Group divided>
-            {console.log(coffeePots)}
             {coffeePots.map((item) => (
               <Item key={uuid()}>
                 <Item.Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
@@ -80,12 +65,13 @@ const Welcome = (props) => {
                         to={`/coffeepot/edit/${item._id}`}>
                         Edit
                       </Link>
-
-                      <Button
-                        className="ui focused tiny orange"
-                        onClick={() => handleDelete(`${item._id}`)}>
-                        Delete buton
-                      </Button>
+                      {authStatus.user.isAdmin ? (
+                        <Button
+                          className="ui focused tiny orange"
+                          onClick={() => handleDelete(`${item._id}`)}>
+                          Delete buton
+                        </Button>
+                      ) : null}
                     </Item.Extra>
                   ) : null}
                 </Item.Content>
