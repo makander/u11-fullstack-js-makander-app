@@ -10,7 +10,7 @@ import {
   Message,
 } from 'semantic-ui-react';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = (props) => {
   const { history } = props;
@@ -32,19 +32,16 @@ const Login = (props) => {
       .then((res) => {
         dispatch({
           type: 'LOGIN',
+          payload: res.data.user,
         });
-        if (res.data.isAdmin) {
-          dispatch({
-            type: 'IS_ADMIN',
-          });
-        }
+
         history.push('/');
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
+    <Grid textAlign="center" style={{ height: '50vh' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">
           <Image src="/logo.png" /> Log-in to your account

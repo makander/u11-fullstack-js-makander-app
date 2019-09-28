@@ -27,9 +27,11 @@ const Navbar = (props) => {
             <Link to={'/'}>CoffeePot</Link>
           </Menu.Item>
 
-          <Menu.Item fitted="vertically">
-            <Link to={'/users'}>Users</Link>
-          </Menu.Item>
+          {authStatus.user.isAdmin ? (
+            <Menu.Item fitted="vertically">
+              <Link to={'/users'}>Users</Link>
+            </Menu.Item>
+          ) : null}
 
           <Menu.Item fitted="vertically">
             <Link to={'/profile'}>Profile</Link>
