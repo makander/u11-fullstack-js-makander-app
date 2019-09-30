@@ -40,7 +40,7 @@ const Welcome = (props) => {
   return (
     <Grid container centered columns={1}>
       <Grid.Row>
-        <Header size="huge">Welcome to CoffePot</Header>
+        <Header size="huge">Welcome to CoffeePot</Header>
       </Grid.Row>
 
       {!loading ? (
