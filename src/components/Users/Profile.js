@@ -1,20 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 import {
   Button,
   Form,
   Grid,
-  Header,
   Image,
   Message,
-  Checkbox,
   Segment,
   Loader,
 } from 'semantic-ui-react';
-import uuid from 'uuid';
 
 const EditUser = (props) => {
   const { authStatus } = useContext(AuthContext);
@@ -29,14 +25,14 @@ const EditUser = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/api/users/edit/${authStatus.user.id}`, {
+      .put(`${process.env.REACT_APP_BE_API}users/edit/${authStatus.user._id}`, {
         firstName,
         lastName,
         email,
         password,
       })
       .then(() => {
-        history.push('/users');
+        history.push('/');
       })
       .catch((e) => console.log(e));
   };
