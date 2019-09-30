@@ -39,7 +39,7 @@ const EditUser = (props) => {
     e.preventDefault();
     axios
       .put(
-        `${process.env.REACT_APP_BE_API}users/edit/${props.match.params.id}`,
+        `${process.env.REACT_APP_BE_API}/users/edit/${props.match.params.id}`,
         {
           firstName,
           lastName,

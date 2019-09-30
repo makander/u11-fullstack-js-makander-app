@@ -22,7 +22,7 @@ const Login = (props) => {
     e.preventDefault();
     axios
       .post(
-        `${process.env.REACT_APP_BE_API}users/login`,
+        `${process.env.REACT_APP_BE_API}/users/login`,
         {
           email,
           password,
@@ -44,7 +44,7 @@ const Login = (props) => {
     <Grid textAlign="center" style={{ height: '50vh' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">
-          <Image src="/logo.png" /> Log-in to your account
+          Log-in to your account
         </Header>
         <Form size="large" onSubmit={handleSubmit}>
           <Segment stacked>
