@@ -4,82 +4,108 @@ import {
   Header,
   Grid,
   Item,
-  Label,
-  ItemHeader,
   Button,
+  Loader,
+  Segment,
+  Image,
 } from 'semantic-ui-react';
 import { AuthContext } from '../context/AuthContext';
+import logo from '../coffee-maker.svg';
 import axios from 'axios';
 import uuid from 'uuid';
-import { handleRef } from '@stardust-ui/react-component-ref';
 
-const Welcome = () => {
+const Welcome = (props) => {
   const { authStatus } = useContext(AuthContext);
   const [coffeePots, setCoffeePots] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/coffeepots/')
+
+      .get(`${process.env.REACT_APP_BE_API}/coffeepots`)
       .then((data) => {
         setCoffeePots(data.data.result);
-        console.log(data.data.result[0]);
       })
       .catch((err) => console.log(err));
   }, [setLoading]);
 
+  useEffect(() => {});
+
   const handleDelete = (id) => {
     console.log('delete');
-    axios.delete(`http://localhost:5000/api/coffeepots/delete/${id}`);
+    axios.delete(`${process.env.REACT_APP_BE_API}/coffeepots/delete/${id}`);
     setCoffeePots(coffeePots.filter((coffeePot) => coffeePot._id !== `${id}`));
   };
 
   return (
     <Grid container centered columns={1}>
-      {console.log(authStatus)}
       <Grid.Row>
-        <Header size="huge">Welcome to CoffePot</Header>
+        <Header size="huge">Welcome to CoffeePot</Header>
       </Grid.Row>
 
       {!loading ? (
-        <div>Loading</div>
+        <Loader active inline="centered" size="large" />
       ) : (
-        <Item.Group divided>
-          {console.log(coffeePots)}
-          {coffeePots.map((item) => (
-            <Item key={uuid()}>
-              <Item.Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
+        <Segment stacked>
+          <Item.Group divided>
+            {coffeePots.map((item) => (
+              <Item key={uuid()}>
+                <Image size="tiny" src={logo} />
+                <Item.Content>
+                  <Item.Header
+                    as="h5"
+                    color="teal"
+                    textalign="center"
+                    key={uuid()}>
+                    {item.name}
+                  </Item.Header>
 
-              <Item.Content>
-                <ItemHeader key={uuid()}>{item.name}</ItemHeader>
-                <br />
-                {item.status.map((item) => (
-                  <Item.Description key={uuid()}>
-                    {item.weight}
-                    {item.time}
-                  </Item.Description>
-                ))}
-                <Item.Meta key={uuid()}>{item.description}</Item.Meta>
-                {authStatus.isLoggedIn ? (
-                  <Item.Extra key={uuid()}>
-                    <Link
-                      className="ui focused button tiny primary"
-                      to={`/coffeepot/edit/${item._id}`}>
-                      Edit
-                    </Link>
-
-                    <Button
-                      className="ui focused orange tiny primary"
-                      onClick={() => handleDelete(`${item._id}`)}>
-                      Delete buton
-                    </Button>
-                  </Item.Extra>
-                ) : null}
-              </Item.Content>
-            </Item>
-          ))}
-        </Item.Group>
+                  {item.status.map((item) => (
+                    <Item.Description key={uuid()}>
+                      Current weight: {item.weight}g
+                      <br />
+                      Measurement taken: {item.time}
+                    </Item.Description>
+                  ))}
+                  <Item.Meta key={uuid()}>{item.description}</Item.Meta>
+                  {authStatus.isLoggedIn ? (
+                    <Item.Extra key={uuid()}>
+                      <Link
+                        className="ui focused button tiny primary"
+                        to={`/coffeepot/edit/${item._id}`}>
+                        Edit
+                      </Link>
+                      {authStatus.user.isAdmin ? (
+                        <Button
+                          className="ui focused tiny orange"
+                          onClick={() => handleDelete(`${item._id}`)}>
+                          Delete
+                        </Button>
+                      ) : null}
+                    </Item.Extra>
+                  ) : null}
+                </Item.Content>
+              </Item>
+            ))}
+          </Item.Group>
+        </Segment>
       )}
+      <div className="ui vertical footer segment">
+        <div className="ui container">
+          <div>
+            Icons made by{' '}
+            <a
+              href="https://www.flaticon.com/authors/smashicons"
+              title="Smashicons">
+              Smashicons
+            </a>{' '}
+            from{' '}
+            <a href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com
+            </a>
+          </div>
+        </div>
+      </div>
     </Grid>
   );
 };

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   Form,
-  Header,
+  Message,
   Container,
-  TextArea,
   Grid,
+  Segment,
 } from 'semantic-ui-react';
 import axios from 'axios';
 
 const EditCoffeePot = (props) => {
+  const { history } = props;
   const [coffeePot, setCoffeePot] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -19,9 +20,10 @@ const EditCoffeePot = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/coffeepots/${props.match.params.id}`)
+      .get(
+        `${process.env.REACT_APP_BE_API}/coffeepots/${props.match.params.id}`
+      )
       .then((data) => {
-        console.log(data.data.result);
         setCoffeePot([data.data.result]);
       })
       .catch((err) => console.log(err));
@@ -29,14 +31,16 @@ const EditCoffeePot = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(
-      `http://localhost:5000/api/coffeepots/edit/${props.match.params.id}`,
-      {
-        name,
-        description,
-        ip,
-      }
-    );
+    axios
+      .put(
+        `${process.env.REACT_APP_BE_API}/coffeepots/edit/${props.match.params.id}`,
+        {
+          name,
+          description,
+          ip,
+        }
+      )
+      .then(() => history.push('/'));
   };
 
   return (
@@ -45,45 +49,49 @@ const EditCoffeePot = (props) => {
         <div>Loading</div>
       ) : (
         <Container>
-          <Header textAlign="center" size="huge">
-            Update to CoffeePot
-          </Header>
-          {coffeePot.map((item) => (
-            <Form onSubmit={handleSubmit}>
-              <Form.Field>
-                <label>Name</label>
-                <input
+          <Message size="huge">
+            Update CoffeePot: {coffeePot.map((item) => item.name)}
+          </Message>
+          <Form onSubmit={handleSubmit}>
+            {coffeePot.map((item, list, index) => (
+              <Segment stacked key={index + 'segment'}>
+                <Form.Input
+                  key={index + 'name'}
+                  id={list.name + 'name'}
                   type="text"
                   value={name}
-                  placeholder="Title"
+                  placeholder="Name"
                   onChange={(e) => setName(e.target.value)}
                 />
-              </Form.Field>
-              <Form.Field>
-                <label>Description</label>
-                <TextArea
-                  rows={3}
+
+                <Form.Input
+                  key={index + 'decription'}
+                  id={list.description + 'description'}
                   type="text"
                   value={description}
                   placeholder="Description"
                   onChange={(e) => setDescription(e.target.value)}
                 />
-              </Form.Field>
-              <Form.Field>
-                <label>IP-Adress</label>
-                <input
+
+                <Form.Input
+                  key={index + 'ip'}
+                  id={list.ip}
                   type="text"
                   value={ip}
                   placeholder="IP-Adress"
                   onChange={(e) => setip(e.target.value)}
                 />
-              </Form.Field>
 
-              <Button type="submit" color="green">
-                Submit
-              </Button>
-            </Form>
-          ))}
+                <Button
+                  type="submit"
+                  color="green"
+                  key={index + 'button'}
+                  id={list + 'button'}>
+                  Submit
+                </Button>
+              </Segment>
+            ))}
+          </Form>
         </Container>
       )}
     </Grid>

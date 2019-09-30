@@ -5,11 +5,6 @@ import { AuthContext } from '../context/AuthContext';
 const ProtectedRoute = ({ component: Component, ...props }) => {
   const { authStatus } = useContext(AuthContext);
 
-  {
-    console.log('this is the props in protected route', props);
-    console.log();
-  }
-
   return (
     <Route
       {...props}

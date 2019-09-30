@@ -3,14 +3,18 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import { Header } from 'semantic-ui-react';
 import Navbar from './components/Navbar';
-import Login from './components/Login';
-import Register from './components/Register';
+import Login from './components/Users/Login';
+import Register from './components/Users/Register';
 import Welcome from './components/Welcome';
-import Settings from './components/Settings';
 import EditCoffeePot from './components/CoffeePots/EditCoffeepot';
-import Dashboard from './components/Settings';
+
 import UserContextProvider from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import EditUser from './components/Users/EditUser';
+import ListUsers from './components/Users/ListUsers';
+import Profile from './components/Users/Profile';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const App = () => {
   return (
@@ -27,9 +31,17 @@ const App = () => {
           exact
           component={EditCoffeePot}></Route>
         <ProtectedRoute
-          path="/settings"
+          path="/users/edit/:id"
           exact
-          component={Settings}></ProtectedRoute>
+          component={EditUser}></ProtectedRoute>
+        <ProtectedRoute
+          path="/profile"
+          exact
+          component={Profile}></ProtectedRoute>
+        <ProtectedRoute
+          path="/users"
+          exact
+          component={ListUsers}></ProtectedRoute>
       </BrowserRouter>
     </UserContextProvider>
   );

@@ -22,25 +22,38 @@ const Navbar = (props) => {
   return (
     <>
       {authStatus.isLoggedIn ? (
-        <Menu>
-          <Menu.Item>
-            <Link to={'/dashboard'}>Dashboard</Link>
+        <Menu size="large" style={{ color: '#SD3B3' }}>
+          <Menu.Item fitted="vertically">
+            <Link to={'/'}>Status</Link>
           </Menu.Item>
-          <Menu.Item position="right" name="Logout">
-            <button
-              className="link-button"
-              type="button"
-              onClick={handleLogout}>
-              Log Out
-            </button>
+
+          {authStatus.user.isAdmin ? (
+            <Menu.Item fitted="vertically">
+              <Link to={'/users'}>Users</Link>
+            </Menu.Item>
+          ) : null}
+
+          <Menu.Item fitted="vertically">
+            <Link to={'/profile/'}>Profile</Link>
           </Menu.Item>
+
+          <Menu.Menu position="right">
+            <Menu.Item name="Logout">
+              <button
+                className="link-button"
+                type="button"
+                onClick={handleLogout}>
+                Log Out
+              </button>
+            </Menu.Item>
+          </Menu.Menu>
         </Menu>
       ) : (
-        <Menu>
-          <Menu.Item>
-            <Link to={'/'}>CoffeePot</Link>
+        <Menu size="large" style={{ backgroundColor: '#f2f8ee' }}>
+          <Menu.Item fitted="vertically">
+            <Link to={'/'}>Status</Link>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item fitted="vertically">
             <Link to={'/login'}>Login</Link>
           </Menu.Item>
         </Menu>
