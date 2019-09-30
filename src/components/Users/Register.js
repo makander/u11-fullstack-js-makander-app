@@ -22,7 +22,7 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_BE_API}users/register`, {
+      .post(`${process.env.REACT_APP_BE_API}/users/register`, {
         firstName,
         lastName,
         email,
@@ -38,7 +38,7 @@ const Register = (props) => {
     <Grid textAlign="center" style={{ height: '50vh' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">
-          <Image src="/logo.png" /> Register
+          Register
         </Header>
         <Form size="large" onSubmit={handleSubmit}>
           <Segment stacked>

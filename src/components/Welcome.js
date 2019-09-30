@@ -33,7 +33,7 @@ const Welcome = (props) => {
 
   const handleDelete = (id) => {
     console.log('delete');
-    axios.delete(`${process.env.REACT_APP_BE_API}coffeepots/delete/${id}`);
+    axios.delete(`${process.env.REACT_APP_BE_API}/coffeepots/delete/${id}`);
     setCoffeePots(coffeePots.filter((coffeePot) => coffeePot._id !== `${id}`));
   };
 

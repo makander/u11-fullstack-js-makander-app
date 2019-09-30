@@ -20,7 +20,9 @@ const EditCoffeePot = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BE_API}coffeepots/${props.match.params.id}`)
+      .get(
+        `${process.env.REACT_APP_BE_API}/coffeepots/${props.match.params.id}`
+      )
       .then((data) => {
         setCoffeePot([data.data.result]);
       })
@@ -31,7 +33,7 @@ const EditCoffeePot = (props) => {
     e.preventDefault();
     axios
       .put(
-        `${process.env.REACT_APP_BE_API}coffeepots/edit/${props.match.params.id}`,
+        `${process.env.REACT_APP_BE_API}/coffeepots/edit/${props.match.params.id}`,
         {
           name,
           description,

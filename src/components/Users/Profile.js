@@ -25,12 +25,15 @@ const EditUser = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`${process.env.REACT_APP_BE_API}users/edit/${authStatus.user._id}`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      })
+      .put(
+        `${process.env.REACT_APP_BE_API}/users/edit/${authStatus.user._id}`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        }
+      )
       .then(() => {
         history.push('/');
       })

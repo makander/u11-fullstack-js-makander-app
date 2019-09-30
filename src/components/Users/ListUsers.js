@@ -10,7 +10,7 @@ const ListUsers = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BE_API}users/`)
+      .get(`${process.env.REACT_APP_BE_API}/users/`)
       .then((data) => {
         console.log(data);
         setUsers(data.data.result);
@@ -20,7 +20,7 @@ const ListUsers = () => {
 
   const handleDelete = (id) => {
     console.log('delete');
-    axios.delete(`${process.env.REACT_APP_BE_API}users/delete/${id}`);
+    axios.delete(`${process.env.REACT_APP_BE_API}/users/delete/${id}`);
     setUsers(users.filter((user) => user._id !== `${id}`));
   };
 
