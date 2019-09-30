@@ -62,7 +62,7 @@ const Welcome = (props) => {
 
                   {item.status.map((item) => (
                     <Item.Description key={uuid()}>
-                      Current weight: {item.weight}
+                      Current weight: {item.weight}g
                       <br />
                       Measurement taken: {item.time}
                     </Item.Description>
@@ -79,7 +79,7 @@ const Welcome = (props) => {
                         <Button
                           className="ui focused tiny orange"
                           onClick={() => handleDelete(`${item._id}`)}>
-                          Delete buton
+                          Delete
                         </Button>
                       ) : null}
                     </Item.Extra>
