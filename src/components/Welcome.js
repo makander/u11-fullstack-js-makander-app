@@ -1,7 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Header, Grid, Item, Button, Loader, Segment } from 'semantic-ui-react';
+import {
+  Header,
+  Grid,
+  Item,
+  Button,
+  Loader,
+  Segment,
+  Image,
+} from 'semantic-ui-react';
 import { AuthContext } from '../context/AuthContext';
+import logo from '../coffee-maker.svg';
 import axios from 'axios';
 import uuid from 'uuid';
 
@@ -12,7 +21,8 @@ const Welcome = (props) => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/coffeepots/')
+
+      .get(`${process.env.REACT_APP_BE_API}/coffeepots`)
       .then((data) => {
         setCoffeePots(data.data.result);
       })
@@ -23,7 +33,7 @@ const Welcome = (props) => {
 
   const handleDelete = (id) => {
     console.log('delete');
-    axios.delete(`http://localhost:5000/api/coffeepots/delete/${id}`);
+    axios.delete(`${process.env.REACT_APP_BE_API}coffeepots/delete/${id}`);
     setCoffeePots(coffeePots.filter((coffeePot) => coffeePot._id !== `${id}`));
   };
 
@@ -40,8 +50,7 @@ const Welcome = (props) => {
           <Item.Group divided>
             {coffeePots.map((item) => (
               <Item key={uuid()}>
-                <Item.Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
-
+                <Image size="tiny" src={logo} />
                 <Item.Content>
                   <Item.Header
                     as="h5"
@@ -53,8 +62,9 @@ const Welcome = (props) => {
 
                   {item.status.map((item) => (
                     <Item.Description key={uuid()}>
-                      {item.weight}
-                      {item.time}
+                      Current weight: {item.weight}
+                      <br />
+                      Measurement taken: {item.time}
                     </Item.Description>
                   ))}
                   <Item.Meta key={uuid()}>{item.description}</Item.Meta>
@@ -80,6 +90,22 @@ const Welcome = (props) => {
           </Item.Group>
         </Segment>
       )}
+      <div className="ui vertical footer segment">
+        <div className="ui container">
+          <div>
+            Icons made by{' '}
+            <a
+              href="https://www.flaticon.com/authors/smashicons"
+              title="Smashicons">
+              Smashicons
+            </a>{' '}
+            from{' '}
+            <a href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com
+            </a>
+          </div>
+        </div>
+      </div>
     </Grid>
   );
 };

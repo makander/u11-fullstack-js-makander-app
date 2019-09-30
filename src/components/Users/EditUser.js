@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 import {
@@ -9,12 +8,10 @@ import {
   Grid,
   Header,
   Image,
-  Message,
   Checkbox,
   Segment,
   Loader,
 } from 'semantic-ui-react';
-import uuid from 'uuid';
 
 const EditUser = (props) => {
   const { authStatus } = useContext(AuthContext);
@@ -30,7 +27,7 @@ const EditUser = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/users/${props.match.params.id}`)
+      .get(`${process.env.REACT_APP_BE_API}/users/${props.match.params.id}`)
       .then((data) => {
         console.log(data);
         setUser(data.data.result);
@@ -41,13 +38,16 @@ const EditUser = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/api/users/edit/${props.match.params.id}`, {
-        firstName,
-        lastName,
-        email,
-        password,
-        isAdmin,
-      })
+      .put(
+        `${process.env.REACT_APP_BE_API}users/edit/${props.match.params.id}`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+          isAdmin,
+        }
+      )
       .then(() => {
         history.push('/users');
       })

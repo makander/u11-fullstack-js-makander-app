@@ -22,7 +22,7 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:5000/api/users/register', {
+      .post(`${process.env.REACT_APP_BE_API}users/register`, {
         firstName,
         lastName,
         email,
